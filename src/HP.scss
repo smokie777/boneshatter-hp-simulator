@@ -1,0 +1,28 @@
+.globe_container {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  .hp_fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ef4444;
+  }
+
+  .hp_text {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222;
+    pointer-events: none;
+    user-select: none;
+  }
+}
