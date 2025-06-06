@@ -1,6 +1,6 @@
 import './App.scss';
 import { useState } from "react";
-import { useDebounce } from './useDebounce';
+// import { useDebounce } from './useDebounce';
 import { HP, PlaceholderHP } from './HP';
 import { defaultInputsState, inputsInfo } from './inputs';
 
@@ -14,30 +14,30 @@ export default function App() {
   const [recoupOver, setRecoupOver] = useState(4);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [logs, setLogs] = useState<string[]>([welcomeMessage]);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   
   const isError = !Object.values(userInputs).every(isValidNumber)
 
-  const generateLogs = () => {
-    setIsLoading(false);
-  };
+  // const generateLogs = () => {
+  //   setIsLoading(false);
+  // };
 
-  // Trigger db() 1s after a valid update to any field
-  useDebounce(
-    () => {
-      if (!isError) {
-        // const parsed = Object.fromEntries(
-        //   Object.entries(inputs).map(([key, val]) => [key, parseFloat(val)])
-        // );
-        generateLogs();
-      }
-    },
-    1000,
-    [userInputs, hasOverleech, recoupOver]
-  );
+  // // Trigger db() 1s after a valid update to any field
+  // useDebounce(
+  //   () => {
+  //     if (!isError) {
+  //       // const parsed = Object.fromEntries(
+  //       //   Object.entries(inputs).map(([key, val]) => [key, parseFloat(val)])
+  //       // );
+  //       generateLogs();
+  //     }
+  //   },
+  //   1000,
+  //   [userInputs, hasOverleech, recoupOver]
+  // );
 
   const handleInputChange = (key: string, value: string) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     setUserInputs((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -60,7 +60,7 @@ export default function App() {
             value="true"
             disabled={shouldAnimate}
             checked={hasOverleech}
-            onChange={() => { setIsLoading(true); setHasOverleech(true); }}
+            onChange={() => setHasOverleech(true)}
           />
           Yes
         </label>
@@ -72,7 +72,7 @@ export default function App() {
             value="false"
             disabled={shouldAnimate}
             checked={!hasOverleech}
-            onChange={() => { setIsLoading(true); setHasOverleech(false); }}
+            onChange={() => setHasOverleech(false)}
           />
           No
         </label>
@@ -91,7 +91,7 @@ export default function App() {
             value="true"
             disabled={shouldAnimate}
             checked={recoupOver === 3}
-            onChange={() => { setIsLoading(true); setRecoupOver(3); }}
+            onChange={() => setRecoupOver(3)}
           />
           3s
         </label>
@@ -103,7 +103,7 @@ export default function App() {
             value="false"
             disabled={shouldAnimate}
             checked={recoupOver === 4}
-            onChange={() => { setIsLoading(true); setRecoupOver(4); }}
+            onChange={() => setRecoupOver(4)}
           />
           4s
         </label>
@@ -114,10 +114,10 @@ export default function App() {
   return (
     <div className='app'>
       <div className='top_nav'>
-        <a href="https://imgur.com/a/V5Qcti1" target="_blank">
+        <a href="https://github.com/smokie777/boneshatter-hp-simulator/blob/main/public/help.png" target="_blank">
           <img className='help_icon' src="/help_icon.png" alt="icon" />
         </a>
-        <a href="https://imgur.com/a/V5Qcti1" target="_blank">
+        <a href="https://github.com/smokie777/boneshatter-hp-simulator" target="_blank">
           <img className='github_icon' src="/github_icon.png" alt="icon" />
         </a>
       </div>
@@ -166,7 +166,7 @@ export default function App() {
       </div>
 
       <div className='logs'>
-        {(isLoading || isError) ? <div className='log'>...</div> : logs.map((log, index) => (
+        {logs.map((log, index) => (
           <div key={index} className='log'>
             {log}
           </div>
