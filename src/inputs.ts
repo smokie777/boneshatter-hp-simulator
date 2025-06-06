@@ -7,6 +7,8 @@ export const defaultInputsState = {
   leechRateCap: "2233.9",
   lifeRegen: "-186.2",
   recoup: "0",
+  rawSelfHitDamage: "0",
+  regenMultiplier: "1.0",
 };
 
 interface InputInfo {
@@ -45,5 +47,13 @@ export const inputsInfo:{[key:string]:InputInfo} = {
   recoup: {
     label: 'Recoup %',
     placeholder: "e.g. 40",
+  },
+  rawSelfHitDamage: {
+    label: 'Raw Self Hit Damage (Jugg)',
+    placeholder: 'e.g. "5077.13'
+  },
+  regenMultiplier: {
+    label: 'Life Regen Multiplier (Jugg)',
+    placeholder: 'e.g. 1.5'
   }
 };

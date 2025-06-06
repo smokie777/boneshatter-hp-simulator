@@ -25,6 +25,8 @@ export const HP = ({
   const LEECH_RATE_CAP = parseInt(inputs.leechRateCap);
   const LIFE_REGEN = parseInt(inputs.lifeRegen);
   const RECOUP = parseInt(inputs.recoup);
+  const RAW_SELF_HIT_DAMAGE = parseInt(inputs.rawSelfHitDamage);
+  const REGEN_MULTIPLIER = parseInt(inputs.regenMultiplier);
   const MS_PER_ATTACK = 1000 / ATTACK_RATE;
 
   // variables used in calculations
@@ -32,6 +34,7 @@ export const HP = ({
   const hpRef = useRef(MAX_HP);
   const leechPerSecondRef = useRef(0);
   const recoupPerSecondRef = useRef(0);
+  const juggRegenPerSecondRef = useRef(0);
   
   // variables only used for display, not calculations
   const [currentHpText, setCurrentHpText] = useState(MAX_HP);
@@ -60,13 +63,21 @@ export const HP = ({
         if (totalTime < 4000) {
           recoupPerSecondRef.current += (SELF_HIT_DAMAGE * (RECOUP / 100)) / recoupOver;
         }
+        if (totalTime < 10000) {
+          juggRegenPerSecondRef.current += (RAW_SELF_HIT_DAMAGE - SELF_HIT_DAMAGE) * 0.015;
+        }
         hpRef.current -= SELF_HIT_DAMAGE - INSTANT_LEECH;
         accumulatedTime -= MS_PER_ATTACK;
       }
 
       // calculate recovery
       // this expression is equivalent to (total leech per ms + net regen per ms) * (time elapsed since last visual update)
-      hpRef.current += ((leechPerSecondRef.current + LIFE_REGEN + recoupPerSecondRef.current) / 1000) * delta;
+      hpRef.current += ((
+        leechPerSecondRef.current
+        + LIFE_REGEN
+        + recoupPerSecondRef.current
+        + juggRegenPerSecondRef.current * REGEN_MULTIPLIER
+      ) / 1000) * delta;
 
       // clamp hp between 0 and MAX_HP
       hpRef.current = Math.max(0, Math.min(hpRef.current, MAX_HP));
