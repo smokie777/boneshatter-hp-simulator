@@ -5,7 +5,7 @@ import { HP, PlaceholderHP } from './HP';
 import { defaultInputsState, inputsInfo } from './inputs';
 
 const isValidNumber = (value:string) => /^-?\d*\.?\d*$/.test(value) && value !== "-" && value !== ".";
-const welcomeMessage = 'Welcome to Boneshatter HP Simulator! This UI simulates your HP movement while continuously attacking with Boneshatter at max trauma stacks.';
+const welcomeMessages = ['Welcome to smokie_777\'s Boneshatter HP Simulator! Here, you can simulate your HP movement while continuously attacking with Boneshatter at max trauma stacks on any ascendancy.', '', 'Click the help button in the top-right to see where you can find these values in POB.'];
 
 export default function App() {
   const [userInputs, setUserInputs] = useState(defaultInputsState);
@@ -13,7 +13,7 @@ export default function App() {
   const [hasOverleech, setHasOverleech] = useState(false);
   const [recoupOver, setRecoupOver] = useState(4);
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  const [logs, setLogs] = useState<string[]>([welcomeMessage]);
+  const [logs, setLogs] = useState<string[]>(welcomeMessages);
   // const [isLoading, setIsLoading] = useState(false);
   
   const isError = !Object.values(userInputs).every(isValidNumber)
@@ -42,7 +42,7 @@ export default function App() {
   };
 
   const handleClickSimulate = () => {
-    setLogs(shouldAnimate ? [welcomeMessage] : ['Running simulation...']);
+    setLogs(shouldAnimate ? welcomeMessages : ['Running simulation...']);
     if (!isError) {
       setLiveInputs({ ...userInputs });
       setShouldAnimate(prev => !prev);
@@ -114,7 +114,7 @@ export default function App() {
   return (
     <div className='app'>
       <div className='top_nav'>
-        <a href="https://github.com/smokie777/boneshatter-hp-simulator/blob/main/public/help.png" target="_blank">
+        <a href="https://github.com/user-attachments/assets/2b9e7c3e-f2d1-4d9b-a09d-dff902539de8" target="_blank">
           <img className='help_icon' src="./help_icon.png" alt="icon" />
         </a>
         <a href="https://github.com/smokie777/boneshatter-hp-simulator" target="_blank">
@@ -166,11 +166,11 @@ export default function App() {
       </div>
 
       <div className='logs'>
-        {logs.map((log, index) => (
-          <div key={index} className='log'>
+        {logs.map((log, index) => log ? (
+          <div key={index}>
             {log}
           </div>
-        ))}
+        ) : <br />)}
       </div>
     </div>
   );
