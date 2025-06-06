@@ -141,6 +141,11 @@ export default function App() {
                 placeholder={inputsInfo[key].placeholder}
                 disabled={shouldAnimate}
                 onChange={(e) => handleInputChange(key, e.target.value)}
+                onBlur={(e) => {
+                  if (e.target.value === '') {
+                    handleInputChange(key, '0');
+                  }
+                }}
                 style={{ border: `2px solid ${isValidNumber(value) ? "green" : "red"}` }}
               />
             </div>
@@ -160,6 +165,7 @@ export default function App() {
               hasOverleech={hasOverleech}
               recoupOver={recoupOver}
               setLogs={setLogs}
+              setShouldAnimate={setShouldAnimate}
             />
           ) : <PlaceholderHP />}
         </div>

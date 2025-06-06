@@ -10,11 +10,13 @@ export const HP = ({
   hasOverleech,
   recoupOver,
   setLogs,
+  setShouldAnimate
 }:{
   inputs: typeof defaultInputsState;
   hasOverleech: boolean;
   recoupOver: number;
   setLogs: React.Dispatch<React.SetStateAction<string[]>>;
+  setShouldAnimate: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // constants from state
   const MAX_HP = parseInt(inputs.maxHp);
@@ -74,7 +76,7 @@ export const HP = ({
       // this expression is equivalent to (total leech per ms + net regen per ms) * (time elapsed since last visual update)
       hpRef.current += ((
         leechPerSecondRef.current
-        + LIFE_REGEN
+        + LIFE_REGEN * REGEN_MULTIPLIER
         + recoupPerSecondRef.current
         + juggRegenPerSecondRef.current * REGEN_MULTIPLIER
       ) / 1000) * delta;
@@ -96,6 +98,7 @@ export const HP = ({
         setIsDead(true);
         controls.start({ height: 0 });
         setLogs(['You died! 😂']);
+        setShouldAnimate(false);
         return;
       }
 
