@@ -114,7 +114,7 @@ export default function App() {
   return (
     <div className='app'>
       <div className='top_nav'>
-        <a href="https://github.com/user-attachments/assets/2b9e7c3e-f2d1-4d9b-a09d-dff902539de8" target="_blank">
+        <a href="https://raw.githubusercontent.com/smokie777/boneshatter-hp-simulator/refs/heads/main/public/help.png" target="_blank">
           <img className='help_icon' src="./help_icon.png" alt="icon" />
         </a>
         <a href="https://github.com/smokie777/boneshatter-hp-simulator" target="_blank">
